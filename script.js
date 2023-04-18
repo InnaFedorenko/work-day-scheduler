@@ -25,8 +25,33 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page - Done
     /*** This code will display the current date in th third line of the header*/
+    var currDate = dayjs();
+    var currDay = currDate.format('dddd, MMMM D')+'th';
+    var currTime = currDate.format('H');
+    // currDate+='th';
+    $('#currentDay').text(currDay);
+    /**This code validate the currennt hour and mark the hours blocks as following:
+     *  - the current time block in red ('present' style);
+     *  - all hour blocks before the current hour in gray ('past' style);
+     *  - all hour blocks after the current hout in green ('future' style);
+     */
+    // $('div').addClass('past');
+    console.log('currTime - '+currTime);
+    for (let i = 0; i <= 23; i++) {
+      if ($(`#${i}`).attr('id') === currTime) {
+        console.log(`The div element with id ${i} is `+  currTime);
+        $(`#${i}`).addClass('present');
+      }else if ($(`#${i}`).attr('id') > currTime) {
+        console.log(`Time after current ${i} is `+  currTime);
+        $(`#${i}`).addClass('future');      
+      }
+      else {
+        console.log(`Time before current ${i} is `+  currTime);
+        $(`#${i}`).addClass('past');
+      };
+    }
 
-    var currDate = dayjs().format('dddd, MMMM D');
-    currDate+='th';
-    $('#currentDay').text(currDate);
+    // $('#0').addClass('present');
+    // $('#1').addClass('past');
+    // $('#2').addClass('future');
 });
