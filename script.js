@@ -14,21 +14,38 @@ $(function () {
     var currTime = parseInt(currDate.format('H'));
 
 
-  // $('#save-all-btn').click(function() {
-  //   console.log('save all');
-  //   $('.time-block').each(function() {
-  //     let id = $(this).attr('id');
-  //     let value = $(this).val();
-  //     localStorage.setItem(id, value);
-  //   });
-  // });
-  // $('#delete-all-btn').click(function() {
-  //   console.log('delete all');
-  //   $('.my-div').each(function() {
-  //     const id = $(this).attr('id');
-  //     localStorage.removeItem(id);
-  //   });
-  // });
+  /**
+   * This funtion save all elements description from Local Storage 
+   * by clicking Save All Events button
+   * and re-load the page to clear events description from the html page
+   * Note - validation to the blank description ws not added 
+   * to cover cases when user delete description.
+   */
+  $('#save-all-btn').click(function() {
+    $('.time-block').each(function() {
+      let id = $(this).attr('id');
+      let value = $(this).find('.description').val();
+      console.log(value);
+      localStorage.setItem(id, value);
+    });
+    location.reload();
+    return;
+  });
+
+  /**
+   * This funtion remove all elements description from Local Storage 
+   * by clicking Clear All Events button
+   * and re-load the page to clear events description from the html page
+   */
+  $('#delete-all-btn').click(function() {
+    console.log('delete all');
+    $('.time-block').each(function() {
+      let id = $(this).attr('id');
+      localStorage.removeItem(id);
+    });
+    location.reload();
+    return;
+  });
 
   /**
    * This function save the event descrition to the local storage 
@@ -38,9 +55,7 @@ $(function () {
   $('.saveBtn').click(function() {
     console.log('Save btn');
     let id = $(this).parent().attr('id');
-    console.log('Id value is '+ id);
     let value = $(this).siblings('textarea').val();
-    console.log('Value value is '+ value);
     localStorage.setItem(id, value);
   });
   //This code write the current date to the header
@@ -62,7 +77,6 @@ $(function () {
     }else {$(`#${i}`).addClass('past');};
     let eventText = localStorage.getItem(i);
     if (eventText){
-      console.log('Event test is ' +i +' : '+ eventText);
       $(`#${i}`).find('.description').val(eventText);
     }
   }
