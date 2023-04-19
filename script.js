@@ -3,22 +3,26 @@
 // in the html.
 $(function () {
   // console.log("Test connected script.js";
-  $('#save-all-btn').click(function() {
-    console.log('save all');
-    $('.time-block').each(function() {
-      let id = $(this).attr('id');
-      let value = $(this).val();
-      localStorage.setItem(id, value);
-    });
-  });
-  $('#delete-all-btn').click(function() {
-    console.log('delete all');
-    $('.my-div').each(function() {
-      const id = $(this).attr('id');
-      localStorage.removeItem(id);
-    });
-  });
-  //save the element
+  // $('#save-all-btn').click(function() {
+  //   console.log('save all');
+  //   $('.time-block').each(function() {
+  //     let id = $(this).attr('id');
+  //     let value = $(this).val();
+  //     localStorage.setItem(id, value);
+  //   });
+  // });
+  // $('#delete-all-btn').click(function() {
+  //   console.log('delete all');
+  //   $('.my-div').each(function() {
+  //     const id = $(this).attr('id');
+  //     localStorage.removeItem(id);
+  //   });
+  // });
+  /**
+   * This function save the event descrition to the local storage 
+   * by clicking related to this event Save button
+   * the event value saved as id = to the event hour and value as event description
+   */
   $('.saveBtn').click(function() {
     console.log('Save btn');
     let id = $(this).parent().attr('id');
@@ -27,12 +31,6 @@ $(function () {
     console.log('Value value is '+ value);
     localStorage.setItem(id, value);
   });
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
 
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
@@ -50,12 +48,14 @@ $(function () {
     var currTime = parseInt(currDate.format('H'));
     // currDate+='th';
     $('#currentDay').text(currDay);
-    /**This code validate the currennt hour and mark the hours blocks as following:
-     *  - the current time block in red ('present' style);
-     *  - all hour blocks before the current hour in gray ('past' style);
-     *  - all hour blocks after the current hout in green ('future' style);
+    /**
+     * This code does cycle for all hours rows and do the following:
+     *  - marks the current time block in red ('present' style);
+     *  - marks all hour blocks before the current hour in gray ('past' style);
+     *  - marks all hour blocks after the current hout in green ('future' style);
+     * - reads local storage
+     * - write events description  to the related hour
      */
-    console.log('currTime - '+currTime);
     for (let i = 0; i <= 23; i++) {
       //validation for current time
       if ($(`#${i}`).attr('id') == currTime) {$(`#${i}`).addClass('present');
@@ -63,5 +63,11 @@ $(function () {
       }else if ($(`#${i}`).attr('id') > currTime) {$(`#${i}`).addClass('future');    
       //validation for past time  
       }else {$(`#${i}`).addClass('past');};
+      let eventText = localStorage.getItem(i);
+      if (eventText){
+        console.log('Event test is ' +i +' : '+ eventText);
+        $(`#${i}`).find('.description').val(eventText);
+      }
     }
+
 });
