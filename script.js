@@ -3,7 +3,30 @@
 // in the html.
 $(function () {
   // console.log("Test connected script.js";
-  
+  $('#save-all-btn').click(function() {
+    console.log('save all');
+    $('.time-block').each(function() {
+      let id = $(this).attr('id');
+      let value = $(this).val();
+      localStorage.setItem(id, value);
+    });
+  });
+  $('#delete-all-btn').click(function() {
+    console.log('delete all');
+    $('.my-div').each(function() {
+      const id = $(this).attr('id');
+      localStorage.removeItem(id);
+    });
+  });
+  //save the element
+  $('.saveBtn').click(function() {
+    console.log('Save btn');
+    let id = $(this).parent().attr('id');
+    console.log('Id value is '+ id);
+    let value = $(this).siblings('textarea').val();
+    console.log('Value value is '+ value);
+    localStorage.setItem(id, value);
+  });
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
